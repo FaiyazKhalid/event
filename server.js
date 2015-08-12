@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 var data = {
     client_id: "73cec7670f2e427a9de45a33ef5c01bf",
     client_secret: "addaf928b6134a4a8eb549bb8f49b302",
-    callback_url: "https://nmviucokfj.localtunnel.me/callback",
+    callback_url: "https://590badf2.ngrok.io/callback",
     aspect: "media",
     object: "tag",
     object_id: "nofilter"
@@ -42,14 +42,18 @@ app.get('/callback', function(req, res){
 });
 
 app.post('/callback', function(req, res){
-    console.log(req.body[0]["object_id"]);
     request.get({url: "https://api.instagram.com/v1/tags/"+req.body[0]["object_id"]+"/media/recent?client_id=73cec7670f2e427a9de45a33ef5c01bf", form: data},
         function(err, response, body) {
             if (err){
                 console.log("Failed to subscribe:", err);
             } else {
                 for(obj in JSON.parse(body)){
-
+                    io.on('connection', function(socket){
+                        socket.emit('newpost', JSON.parse(obj));
+                    });
+                    if(typeof obj != 'string') {
+                        console.log(obj);
+                    }
                 }
             }
         });
