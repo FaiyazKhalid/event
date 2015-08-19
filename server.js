@@ -14,7 +14,6 @@ app.set('view engine', 'html');
 app.use(express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/src'));
 
-
 var instagram = require('./src/instagram')(app, io);
 instagram.requestToInstagram();
 
