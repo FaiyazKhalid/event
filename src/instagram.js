@@ -33,7 +33,7 @@ module.exports = function(app, io){
 var data = {
     client_id: "73cec7670f2e427a9de45a33ef5c01bf",
     client_secret: "addaf928b6134a4a8eb549bb8f49b302",
-    callback_url: "http://cfa613ea.ngrok.io/callback",
+    callback_url: "http://ae9452dc.ngrok.io/callback",
     aspect: "media",
     object: "tag",
     object_id: "nofilter"
