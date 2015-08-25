@@ -3,14 +3,7 @@ var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var babel = require('gulp-babel');
 var del = require('del');
-var browserify = require('browserify');
-
-var uglify = require('gulp-uglify');
-var less = require('gulp-less');
-var prefix = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
-var minifyCSS = require('gulp-minify-css');
-
 
 var path = require('path');
 

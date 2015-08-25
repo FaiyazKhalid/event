@@ -6961,7 +6961,7 @@ function addTwitterImageToList(imageObject){
 }
 window.realtime = {
     connect: function(){
-        window.socket = io.connect("http://127.0.0.1:3000");
+        window.socket = io.connect("http://127.0.0.1:5000");
         window.socket.on("img", function(message){
             var parsedObj = JSON.parse(message);
             if (parsedObj != null) {
