@@ -1,6 +1,6 @@
 var request = require('request');
 
-module.exports = function(app, io, clientID, secretID, domain, tag){
+module.exports = function(app, io, clientID, secretID, domain, tags){
     var module = {};
 
     var data = {
@@ -8,8 +8,7 @@ module.exports = function(app, io, clientID, secretID, domain, tag){
         client_secret: secretID,
         callback_url: "http://"+ domain +"/node/instagram_callback",
         aspect: "media",
-        object: "tag",
-        object_id: tag
+        object: "tag"
     };
 
     app.get('/node/instagram_callback', function(req, res){
@@ -28,13 +27,29 @@ module.exports = function(app, io, clientID, secretID, domain, tag){
         res.end();
     });
     module.requestToInstagram = function() {
-        request.post({url: "https://api.instagram.com/v1/subscriptions", form: data},
+        for(var i = 0; i < tags.length; i++) {
+            data["object_id"] = tags[i];
+            request.post({url: "https://api.instagram.com/v1/subscriptions", form: data},
+                function (err, response, body) {
+                    if (err) {
+                        console.log("Failed to subscribe:", err);
+                    } else {
+                        console.log(body);
+                        console.log("Successfully subscribed.");
+                    }
+                });
+        }
+    }
+
+    module.deleteSubscription = function(){
+        data["object"] = "all";
+        request.del("https://api.instagram.com/v1/subscriptions?object=all&client_id="+data["client_id"]+"&client_secret="+data["client_secret"],
             function (err, response, body) {
                 if (err) {
-                    console.log("Failed to subscribe:", err);
+                    console.log("Failed to unsubscribe:", err);
                 } else {
                     console.log(body);
-                    console.log("Successfully subscribed.");
+                    console.log("Successfully remove subscription.");
                 }
             });
     }

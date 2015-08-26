@@ -32,8 +32,15 @@ app.get('/node', function (req, res) {
 app.post('/node/server_configuration', function(req, res){
     var params = res['req']['body'];
     console.log(params);
-    var instagram = require('./src/instagram')(app, io, params["instagram_client_id"], params["instagram_client_secret"], params["domain"], params["tags"][0]);
+    var instagram = require('./src/instagram')(app, io, params["instagram_client_id"], params["instagram_client_secret"], params["domain"], params["tags"]);
     instagram.requestToInstagram();
     //tweeter.requestToTwitter();
+    res.end();
+});
+
+app.post('/node/stop_stream', function(req, res){
+    var params = res['req']['body'];
+    var instagram = require('./src/instagram')(app, io, params["instagram_client_id"], params["instagram_client_secret"], params["domain"], params["tags"][0]);
+    instagram.deleteSubscription();
     res.end();
 });
