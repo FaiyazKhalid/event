@@ -29,6 +29,7 @@ module.exports = function(app, io, clientID, secretID, domain, tags){
     module.requestToInstagram = function() {
         for(var i = 0; i < tags.length; i++) {
             data["object_id"] = tags[i];
+            console.log(data);
             request.post({url: "https://api.instagram.com/v1/subscriptions", form: data},
                 function (err, response, body) {
                     if (err) {
